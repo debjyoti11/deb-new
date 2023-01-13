@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workspace": {
+      "type": "String"
+    }
+  },
+  "resources": [
+    {
+      "id": "[concat(resourceId('Microsoft.OperationalInsights/workspaces/providers', parameters('workspace'), 'Microsoft.SecurityInsights'),'/alertRules/7823d97e-da13-4c2d-898c-547613d0028a')]",
+      "name": "[concat(parameters('workspace'),'/Microsoft.SecurityInsights/7823d97e-da13-4c2d-898c-547613d0028a')]",
+      "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+      "kind": "Scheduled",
+      "apiVersion": "2022-09-01-preview",
+      "properties": {
+        "queryFrequency": "PT5H",
+        "queryPeriod": "PT5H",
+        "triggerOperator": "GreaterThan",
+        "triggerThreshold": 1,
+        "eventGroupingSettings": {
+          "aggregationKind": "SingleAlert"
+        },
+        "severity": "Medium",
+        "query": "AACAudit\r\n| where _ResourceId contains \"test\"",
+        "suppressionDuration": "PT5H",
+        "suppressionEnabled": false,
+        "incidentConfiguration": {
+          "createIncident": true,
+          "groupingConfiguration": {
+            "enabled": false,
+            "reopenClosedIncident": false,
+            "lookbackDuration": "PT5H",
+            "matchingMethod": "AllEntities",
+            "groupByEntities": [],
+            "groupByAlertDetails": [],
+            "groupByCustomDetails": []
+          }
+        },
+        "tactics": [],
+        "techniques": [],
+        "displayName": "test-scheduled-2",
+        "enabled": true,
+        "description": "",
+        "alertRuleTemplateName": null,
+        "lastModifiedUtc": "2022-11-30T19:41:36.1069362Z"
+      }
+    }
+  ]
+}
